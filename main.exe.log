@@ -1,0 +1,977 @@
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 36, функция: Errors stackInit(Stack_t*, size_t),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F61DC (32-bit), Flags: Cmdre0, Thread: 0x26C4 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041E90F in C:\Users\Иван\Documents\StackNew\main.exe: stackInit() at C:/Users/Иван/Documents/StackNew/./main.cpp:36:
+
+     34:     //chack errors
+     35:     //check capacity size
+=>   36:     assert(stk);
+     37:     stk->capacity = capacity;
+     38: 
+
+# 1 0x0041E8BD in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:26:
+
+     24:     Stack_t* stk1 = NULL;
+     25:     Stack_t stk = {};
+=>   26:     stackInit(stk1, 5);
+     27: 
+     28:     return 0;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 21:23:22, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 21:23:26
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 69, функция: Errors stackPush(Stack_t*, double),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size != stk->capacity".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F61DC (32-bit), Flags: Cmdre0, Thread: 0x2198 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041EAF8 in C:\Users\Иван\Documents\StackNew\main.exe: stackPush() at C:/Users/Иван/Documents/StackNew/./main.cpp:69:
+
+     67:     //    // reallocUp(stk);
+     68:     // }
+=>   69:     assert(stk->size != stk->capacity);
+     70:     stk->data[stk->size] = value;
+     71:     stk->size++;
+
+# 1 0x0041E939 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:34:
+
+     32:     stackPush(&stk, 5);
+     33:     stackPush(&stk, 12);
+=>   34:     stackPush(&stk, 12);
+     35:     stackDump("stack.log", &stk);
+     36: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 21:32:35, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 21:32:38
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 148, функция: double stackPop(Stack_t*, Errors*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x5624 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041F000 in C:\Users\Иван\Documents\StackNew\main.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./main.cpp:148:
+
+    146:     //printf("1\n");
+    147:     //printf("1size1 = %lu\n",(unsigned long) stk->size);
+=>  148:     assert(stk->size);
+    149:     //printf("2size1 = %lu\n",(unsigned long) stk->size);    
+    150:     //fprintf(stderr, "SOMATHONG\n");
+
+# 1 0x0041E9D9 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:46:
+
+     44:     stackPop(&stk, &err);
+     45:     stackPop(&stk, &err);
+=>   46:     stackPop(&stk, &err);
+     47:     stackDump("stack.log", &stk);
+     48: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 22:09:27, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 22:09:29
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 148, функция: double stackPop(Stack_t*, Errors*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x1DD4 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041F000 in C:\Users\Иван\Documents\StackNew\main.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./main.cpp:148:
+
+    146:     //check errors to err
+    147:     //realloc
+=>  148: 
+    149:     assert(stk->size);
+    150:     double popValue = stk->data[stk->size - 1];
+
+# 1 0x0041E9D9 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:46:
+
+     44:     stackPop(&stk, &err);
+     45:     stackPop(&stk, &err);
+=>   46:     stackPop(&stk, &err);
+     47:     stackPop(&stk, &err);
+     48:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 22:09:27, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 22:14:32
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 148, функция: double stackPop(Stack_t*, Errors*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x2498 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041F000 in C:\Users\Иван\Documents\StackNew\main.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./main.cpp:148:
+
+    146:     //check errors to err
+    147:     //realloc
+=>  148: 
+    149:     assert(stk->size);
+    150:     double popValue = stk->data[stk->size - 1];
+
+# 1 0x0041E9D9 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:46:
+
+     44:     stackPop(&stk, &err);
+     45:     stackPop(&stk, &err);
+=>   46:     stackPop(&stk, &err);
+     47:     stackPop(&stk, &err);
+     48:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 22:09:27, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 22:14:41
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 149, функция: double stackPop(Stack_t*, Errors*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0xBA8 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041F000 in C:\Users\Иван\Documents\StackNew\main.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./main.cpp:149:
+
+    147:     //realloc
+    148: 
+=>  149:     assert(stk->size);
+    150:     double popValue = stk->data[stk->size - 1];
+    151:     stk->data[stk->size - 1] = POISON;
+
+# 1 0x0041E9D9 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:48:
+
+     46:     stackPop(&stk, &err);
+     47:     stackPop(&stk, &err);
+=>   48:     stackPop(&stk, &err);
+     49:     stackDump("stack.log", &stk);
+     50: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 22:15:10, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 22:15:13
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 83, функция: Errors stackPush(Stack_t*, double),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stackError(stk) == NO_ERR".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x242C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041EB98 in C:\Users\Иван\Documents\StackNew\main.exe: stackPush() at C:/Users/Иван/Documents/StackNew/./main.cpp:83:
+
+     81: 
+     82: Errors stackPush(Stack_t* stk, double value){
+=>   83:     STACK_VERIFY(stk);
+     84:     //STACK_VERIFY;
+     85:     //realloc
+
+# 1 0x0041E8D3 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:41:
+
+     39:     stackInit(&stk, 0);
+     40: 
+=>   41:     stackPush(&stk, 5);
+     42:     stackPush(&stk, 3);
+     43:     stackPush(&stk, 2);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 22:38:27, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 22:38:32
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 83, функция: Errors stackPush(Stack_t*, double),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stackError(stk) == NO_ERR".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x57F4 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041EB98 in C:\Users\Иван\Documents\StackNew\main.exe: stackPush() at C:/Users/Иван/Documents/StackNew/./main.cpp:83:
+
+     81: 
+     82: 
+=>   83: Errors stackPush(Stack_t* stk, double value){
+     84:     STACK_VERIFY(stk);
+     85:     //STACK_VERIFY;
+
+# 1 0x0041E8D3 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:41:
+
+     39:     stackInit(&stk, 5);
+     40: 
+=>   41:     stackPush(&stk, 5);
+     42:     stackPush(&stk, 3);
+     43:     stackPush(&stk, 2);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 22:38:27, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 22:39:50
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 153, функция: double stackPop(Stack_t*, Errors*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x2F88 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041F395 in C:\Users\Иван\Documents\StackNew\main.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./main.cpp:153:
+
+    151:     //check errors to err
+    152:     //realloc
+=>  153:     assert(stk->size);
+    154:     double popValue = stk->data[stk->size - 1];
+    155:     stk->data[stk->size - 1] = POISON;
+
+# 1 0x0041E9D9 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:55:
+
+     53:     stackPop(&stk, &err);
+     54:     stackPop(&stk, &err);
+=>   55:     stackPop(&stk, &err);
+     56: 
+     57:     
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 22:44:25, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 22:44:28
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 153, функция: double stackPop(Stack_t*, Errors*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x51A4 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041F395 in C:\Users\Иван\Documents\StackNew\main.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./main.cpp:153:
+
+    151:     //check errors to err
+    152:     //realloc
+=>  153:     assert(stk->size);
+    154:     double popValue = stk->data[stk->size - 1];
+    155:     stk->data[stk->size - 1] = POISON;
+
+# 1 0x0041E9D9 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:55:
+
+     53:     stackPop(&stk, &err);
+     54:     stackPop(&stk, &err);
+=>   55:     //stackPop(&stk, &err);
+     56: 
+     57: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 22:44:25, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 22:52:06
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 220, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size < stk->capacity".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x670 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041F706 in C:\Users\Иван\Documents\StackNew\main.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./main.cpp:220:
+
+    218:     size_t oldCapacity = stk->capacity;
+    219:     stk->capacity /= scaleFactor;
+=>  220:     assert(stk->size < stk->capacity);
+    221: 
+    222:     for(size_t i = stk->capacity; i < oldCapacity; i++){
+
+# 1 0x0041F3FD in C:\Users\Иван\Documents\StackNew\main.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./main.cpp:164:
+
+    162:     stk->size--;
+    163: 
+=>  164:     reallocDown(stk);
+    165:     
+    166:     STACK_VERIFY(stk);
+
+# 2 0x0041E955 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:55:
+
+     53: 
+     54: 
+=>   55:     stackPop(&stk, &err);
+     56:     stackPop(&stk, &err);
+     57:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 23:09:43, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 23:09:46
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 220, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size < stk->capacity".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x4E08 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041F706 in C:\Users\Иван\Documents\StackNew\main.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./main.cpp:220:
+
+    218:     size_t oldCapacity = stk->capacity;
+    219:     stk->capacity /= scaleFactor;
+=>  220:     assert(stk->size <= stk->capacity);
+    221: 
+    222:     for(size_t i = stk->capacity; i < oldCapacity; i++){
+
+# 1 0x0041F3FD in C:\Users\Иван\Documents\StackNew\main.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./main.cpp:164:
+
+    162:     stk->size--;
+    163: 
+=>  164:     reallocDown(stk);
+    165: 
+    166:     STACK_VERIFY(stk);
+
+# 2 0x0041E955 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:55:
+
+     53: 
+     54: 
+=>   55:     stackPop(&stk, &err);
+     56:     stackPop(&stk, &err);
+     57:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 23:09:43, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 23:10:26
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 220, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size <= stk->capacity".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x13DC (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041F706 in C:\Users\Иван\Documents\StackNew\main.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./main.cpp:220:
+
+    218:     size_t oldCapacity = stk->capacity;
+    219:     stk->capacity /= scaleFactor;
+=>  220:     assert(stk->size <= stk->capacity);
+    221: 
+    222:     for(size_t i = stk->capacity; i < oldCapacity; i++){
+
+# 1 0x0041F3FD in C:\Users\Иван\Documents\StackNew\main.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./main.cpp:164:
+
+    162:     stk->size--;
+    163: 
+=>  164:     reallocDown(stk);
+    165: 
+    166:     STACK_VERIFY(stk);
+
+# 2 0x0041E96B in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:56:
+
+     54: 
+     55:     stackPop(&stk, &err);
+=>   56:     stackPop(&stk, &err);
+     57:     stackPop(&stk, &err);
+     58:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 23:10:32, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 23:10:34
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\main.cpp, строка: 220, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size <= stk->capacity".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x4E60 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041F706 in C:\Users\Иван\Documents\StackNew\main.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./main.cpp:220:
+
+    218:     size_t oldCapacity = stk->capacity;
+    219:     stk->capacity /= scaleFactor;
+=>  220:     printf("%lu\n", (unsigned long) stk->size);
+    221:     printf("%lf\n",  stk->capacity);
+    222:     assert(stk->size < stk->capacity);
+
+# 1 0x0041F3FD in C:\Users\Иван\Documents\StackNew\main.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./main.cpp:164:
+
+    162:     stk->size--;
+    163: 
+=>  164:     reallocDown(stk);
+    165: 
+    166:     STACK_VERIFY(stk);
+
+# 2 0x0041E96B in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:56:
+
+     54: 
+     55:     stackPop(&stk, &err);
+=>   56:     stackPop(&stk, &err);
+     57:     stackPop(&stk, &err);
+     58:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 23:10:32, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 23:11:37
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\stack.cpp, строка: 86, функция: Errors stackInit(Stack_t*, size_t, const char*, const char*, int),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "0".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x3654 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041EA22 in C:\Users\Иван\Documents\StackNew\main.exe: stackInit() at C:/Users/Иван/Documents/StackNew/./stack.cpp:86:
+
+     84:     }
+     85: 
+=>   86:     STACK_VERIFY(stk);
+     87:     printf("Init complete\n");
+     88: 
+
+# 1 0x0041F7F4 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:9:
+
+      7:     Stack_t stk = {};
+      8:     stackInit(&stk, 0
+=>    9:               ON_DBG(,"stk", __FILE__, __LINE__));
+     10: 
+     11:     stackPush(&stk, 5);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 30 2026 21:54:42, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 30 2026 21:54:45
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\stack.cpp, строка: 89, функция: Errors stackInit(Stack_t*, size_t, const char*, const char*, int),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "0".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x2B2C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041EA22 in C:\Users\Иван\Documents\StackNew\main.exe: stackInit() at C:/Users/Иван/Documents/StackNew/./stack.cpp:89:
+
+     87:     }
+     88: 
+=>   89:     STACK_VERIFY(stk);
+     90:     printf("Init complete\n");
+     91: 
+
+# 1 0x0041F7F4 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:9:
+
+      7:     Stack_t stk = {};
+      8:     stackInit(&stk, 0
+=>    9:               ON_DBG(,"stk", __FILE__, __LINE__));
+     10: 
+     11:     stackPush(&stk, 5);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 30 2026 21:58:29, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 30 2026 21:58:34
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\stack.cpp, строка: 89, функция: Errors stackInit(Stack_t*, size_t, const char*, const char*, int),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "0".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x56E8 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041EA22 in C:\Users\Иван\Documents\StackNew\main.exe: stackInit() at C:/Users/Иван/Documents/StackNew/./stack.cpp:89:
+
+     87:     }
+     88: 
+=>   89:     STACK_VERIFY(stk);
+     90:     printf("Init complete\n");
+     91: 
+
+# 1 0x0041F7F4 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:9:
+
+      7:     Stack_t stk = {};
+      8:     stackInit(&stk, 0
+=>    9:               ON_DBG(,"stk", __FILE__, __LINE__));
+     10: 
+     11:     stackPush(&stk, 5);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 30 2026 21:58:29, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 30 2026 21:58:48
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\stack.cpp, строка: 89, функция: Errors stackInit(Stack_t*, size_t, const char*, const char*, int),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "0".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x3A0C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041EA22 in C:\Users\Иван\Documents\StackNew\main.exe: stackInit() at C:/Users/Иван/Documents/StackNew/./stack.cpp:89:
+
+     87:         stk->data[i] = POISON;
+     88:     }
+=>   89: 
+     90:     STACK_VERIFY(stk);
+     91:     printf("Init complete\n");
+
+# 1 0x0041F7F4 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:9:
+
+      7:     Stack_t stk = {};
+      8:     stackInit(&stk, 0
+=>    9:               ON_DBG(,"stk", __FILE__, __LINE__));
+     10: 
+     11:     stackPush(&stk, 5);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 30 2026 21:58:29, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 30 2026 21:59:29
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\stack.cpp, строка: 100, функция: Errors stackPush(Stack_t*, double),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size != stk->capacity".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x1AA4 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041EA33 in C:\Users\Иван\Documents\StackNew\main.exe: stackPush() at C:/Users/Иван/Documents/StackNew/./stack.cpp:100:
+
+     98:     STACK_VERIFY(stk);
+     99: 
+=>  100:     assert(stk->size != stk->capacity);
+    101:     if(stk->size + 1 == stk->capacity){
+    102:         reallocUp(stk);
+
+# 1 0x0041F23E in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:11:
+
+      9:               ON_DBG(,"stk", __FILE__, __LINE__));
+     10: 
+=>   11:     stackPush(&stk, 5);
+     12:     stackPush(&stk, 3);
+     13:     stackPush(&stk, 2);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 30 2026 21:59:31, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 30 2026 21:59:33
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\stack.cpp, строка: 90, функция: Errors stackInit(Stack_t*, size_t, const char*, const char*, int),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "0".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x5194 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041EA22 in C:\Users\Иван\Documents\StackNew\main.exe: stackInit() at C:/Users/Иван/Documents/StackNew/./stack.cpp:90:
+
+     88:     }
+     89: 
+=>   90:     STACK_VERIFY(stk);
+     91:     printf("Init complete\n");
+     92: 
+
+# 1 0x0041F7F4 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:9:
+
+      7:     Stack_t stk = {};
+      8:     stackInit(&stk, 0
+=>    9:               ON_DBG(,"stk", __FILE__, __LINE__));
+     10: 
+     11:     stackPush(&stk, 5);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 30 2026 22:00:08, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 30 2026 22:00:10
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\main.exe, файл: .\stack.cpp, строка: 90, функция: Errors stackInit(Stack_t*, size_t, const char*, const char*, int),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "0".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x509C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041EA22 in C:\Users\Иван\Documents\StackNew\main.exe: stackInit() at C:/Users/Иван/Documents/StackNew/./stack.cpp:90:
+
+     88:     }
+     89: 
+=>   90:     STACK_VERIFY(stk);
+     91:     printf("Init complete\n");
+     92: 
+
+# 1 0x0041F799 in C:\Users\Иван\Documents\StackNew\main.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:9:
+
+      7:     Stack_t stk = {};
+      8:     stackInit(&stk, 0
+=>    9:               ON_DBG(,"stk", __FILE__, __LINE__));
+     10: 
+     11:     stackPush(&stk, 5);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 30 2026 22:01:19, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 30 2026 22:01:22
+
+Run file:	C:\Users\Иван\Documents\StackNew\main.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------

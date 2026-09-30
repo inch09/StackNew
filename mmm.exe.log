@@ -1,0 +1,53 @@
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\mmm.exe, файл: .\main.cpp, строка: 222, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "stk->size < stk->capacity".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x25E4 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041F732 in C:\Users\Иван\Documents\StackNew\mmm.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./main.cpp:222:
+
+    220:     printf("%lu\n", (unsigned long) stk->size);
+    221:     printf("%lf\n",  stk->capacity);
+=>  222:     assert(stk->size < stk->capacity);
+    223: 
+    224:     for(size_t i = stk->capacity; i < oldCapacity; i++){
+
+# 1 0x0041F3FD in C:\Users\Иван\Documents\StackNew\mmm.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./main.cpp:164:
+
+    162:     stk->size--;
+    163: 
+=>  164:     reallocDown(stk);
+    165: 
+    166:     STACK_VERIFY(stk);
+
+# 2 0x0041E955 in C:\Users\Иван\Documents\StackNew\mmm.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:55:
+
+     53: 
+     54: 
+=>   55:     stackPop(&stk, &err);
+     56:     stackPop(&stk, &err);
+     57:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 28 2026 23:11:58, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 28 2026 23:12:04
+
+Run file:	C:\Users\Иван\Documents\StackNew\mmm.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
