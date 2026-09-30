@@ -1,6 +1,10 @@
 #include <TXLib.h>
 #include <stdio.h>
 
+
+//typedef todo
+
+
 #define STACK_VERIFICATION_MODE
 #define STACK_DEBUG_MODE
 /*--------------------------------------------------*/
@@ -22,6 +26,9 @@
 #endif
 /*----------------------------------------------------*/
 #define POISON 2396752
+#define LEFT_CANARY  676767
+#define RIGHT_CANARY 525252
+#define COUNT_OF_CANARY 2
 
 
 struct Stack_t{
@@ -42,7 +49,9 @@ enum Errors{//
     ZERO_CAPACITY_ERR,
     NEGATIVE_CAPACITY_ERR,
     SIZE_MORE_THAN_CAPACITY_ERR,
-    NEGATIVE_SIZE_ERR
+    NEGATIVE_SIZE_ERR,
+    VALUE_OF_LEFT_CANARY_CHANGED_ERR,
+    VALUE_OF_RIGHT_CANARY_CHANGED_ERR
 };
 
 Errors stackInit(Stack_t* stk, size_t capacity 
@@ -60,7 +69,7 @@ Errors reallocDown(Stack_t* stk);
 Errors stackError(Stack_t* stk);
 void handleTheError(Errors err);
 
-
+bool isEqual(double a, double b);
 
 
 Errors stackInit(Stack_t* stk, size_t capacity 
@@ -69,9 +78,16 @@ Errors stackInit(Stack_t* stk, size_t capacity
     //check capacity size
     assert(stk);
     stk->capacity = capacity;
+    
+    double* canaryAddress = NULL;
+    canaryAddress = (double*) calloc(stk->capacity + COUNT_OF_CANARY, sizeof(stk->data[0]));
+    assert(canaryAddress);
 
-    stk->data = (double*) calloc(stk->capacity, sizeof(stk->data[0]));
+    stk->data = (double*) ((char*) canaryAddress + 1 * sizeof(stk->data[0]));;
     assert(stk->data);
+
+    stk->data[-1] = LEFT_CANARY;
+    stk->data[capacity] = RIGHT_CANARY;
 
     stk->size = 0;
 
@@ -124,7 +140,7 @@ Errors stackDump(const char* fileName, Stack_t* stk){
 
     fprintf(filePtr, "    capacity = %lu\n", (unsigned long) stk->capacity);
     fprintf(filePtr, "    size = %lu\n\n", (unsigned long) stk->size);
-
+    fprintf(filePtr, "    data adderss = [0x%p]\n", stk->data);
     //dataPtr
     for(size_t i = 0; i < stk->capacity; i++){
         if(i == stk->size - 1){
@@ -148,8 +164,15 @@ Errors reallocUp(Stack_t* stk){
     const size_t scaleFactor = 2;
     stk->capacity *= scaleFactor;
 
-    stk->data = (double*) realloc((void*) stk->data, stk->capacity * sizeof(stk->data[0]));    
+    double* canaryAddress = NULL;
+    canaryAddress = (double*) realloc((void*) ((char*) stk->data - 1 * sizeof(stk->data[0])), (stk->capacity + COUNT_OF_CANARY) * sizeof(stk->data[0])); 
+    assert(canaryAddress);
+
+    stk->data = (double*) ((char*) canaryAddress + 1 * sizeof(stk->data[0]));   
     assert(stk->data);
+
+    stk->data[-1] = LEFT_CANARY;
+    stk->data[stk->capacity] = RIGHT_CANARY;
 
     for(size_t i = stk->size; i < stk->capacity; i++){
             stk->data[i] = POISON;
@@ -217,6 +240,12 @@ Errors stackError(Stack_t* stk){
     if(stk->size == (size_t) (-1)){
         return NEGATIVE_SIZE_ERR;
     }
+    if(!isEqual(stk->data[-1], LEFT_CANARY)){
+        return VALUE_OF_LEFT_CANARY_CHANGED_ERR;
+    }
+    if(!isEqual(stk->data[stk->capacity], RIGHT_CANARY)){
+        return VALUE_OF_RIGHT_CANARY_CHANGED_ERR;
+    }
 
     return NO_ERR;
 }
@@ -232,7 +261,7 @@ Errors reallocDown(Stack_t* stk){
         return NO_ERR;
     }
 
-    size_t oldCapacity = stk->capacity;
+    //size_t oldCapacity = stk->capacity;
     stk->capacity /= scaleFactor;
 
     printf("size = %lu\n", (unsigned long) stk->size);
@@ -242,9 +271,15 @@ Errors reallocDown(Stack_t* stk){
     // for(size_t i = stk->capacity; i < oldCapacity; i++){
     //     stk->data[i] = CLEANING_CONSTANT;
     // }
+    double* canaryAddress = NULL;
+    canaryAddress = (double*) realloc((void*) ((char*) stk->data - 1 * sizeof(stk->data[0])), (stk->capacity + COUNT_OF_CANARY) * sizeof(stk->data[0])); 
+    assert(canaryAddress);
 
-    stk->data = (double*) realloc((void*) stk->data, stk->capacity * sizeof(stk->data[0]));
+    stk->data = (double*) ((char*) canaryAddress + 1 * sizeof(stk->data[0]));   
     assert(stk->data);
+
+    stk->data[-1] = LEFT_CANARY;
+    stk->data[stk->capacity] = RIGHT_CANARY;
 
     STACK_VERIFY(stk);
 
@@ -273,6 +308,12 @@ void handleTheError(Errors err){
     case NEGATIVE_SIZE_ERR:
         strError = "NEGATIVE_SIZE_ERR";
         break; 
+    case VALUE_OF_LEFT_CANARY_CHANGED_ERR:
+        strError = "VALUE_OF_LEFT_CANARY_CHANGED_ERR";
+        break;
+    case VALUE_OF_RIGHT_CANARY_CHANGED_ERR:
+        strError = "VALUE_OF_RIGHT_CANARY_CHANGED_ERR";
+        break;
     case NO_ERR:
         return;
         break;        
@@ -281,4 +322,9 @@ void handleTheError(Errors err){
     }
 
     printf("You have %s", strError);
+}
+
+bool isEqual(double a, double b){
+    const double epsilon = 0.0001;
+    return fabs(a - b) < epsilon;
 }

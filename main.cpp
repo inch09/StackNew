@@ -3,7 +3,7 @@
 #include "stack.cpp"
 
 int main(){
-    Errors err= NO_ERR;
+    Errors err = NO_ERR;
     Stack_t stk = {};
     stackInit(&stk, 5
               ON_DBG(,"stk", __FILE__, __LINE__));
@@ -14,7 +14,6 @@ int main(){
     stackPush(&stk, 5);
     stackPush(&stk, 12);
     stackPush(&stk, 12);
-
 
     stackPop(&stk, &err);
     stackPop(&stk, &err);

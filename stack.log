@@ -6,6 +6,7 @@ Stack_t <stk> [0x0079FEE4] created by main() at <.\main.cpp>: line 9
     capacity = 16
     size = 8
 
+    data adderss = [0x012372C8]
      [0] = 5
      [1] = 3
      [2] = 2
