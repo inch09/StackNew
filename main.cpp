@@ -10,6 +10,7 @@ int main(){
     Stack_t stk = {};
     stackInit(&stk, 5
               ON_DBG(,"stk", __FILE__, __LINE__));
+    //stk.data[stk.capacity] = 6;
 
     stackPush(&stk, 135);
     stackPush(&stk, 3);

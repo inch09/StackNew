@@ -27,8 +27,8 @@
 #endif
 //----------------------------------------------------
 #define POISON 2396752
-#define LEFT_CANARY 676767
-#define RIGHT_CANARY 525252
+#define LEFT_CANARY 6767676767
+#define RIGHT_CANARY 5252525252
 #define COUNT_OF_CANARY 2
 #define SIZE_OF_CANARY_TYPE sizeof(double)
 
