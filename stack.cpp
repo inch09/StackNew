@@ -2,12 +2,13 @@
 #include <stdio.h>
 
 
-//typedef todo
+// typedef double Stack_elem_t;
+// #define SPECIFIER "%lf"
 
-
+// ---------------------------------------------------
 #define STACK_VERIFICATION_MODE
 #define STACK_DEBUG_MODE
-/*--------------------------------------------------*/
+//--------------------------------------------------
 #ifdef STACK_VERIFICATION_MODE
 #define STACK_VERIFY(stackPtr){\
     if(stackError(stackPtr) != NO_ERR){\
@@ -18,17 +19,18 @@
 #else
 #define STACK_VERIFY(...)
 #endif
-/*---------------------------------------------------*/
+//---------------------------------------------------
 #ifdef STACK_DEBUG_MODE
 #define ON_DBG(...) __VA_ARGS__
 #else
 #define ON_DBG(...)
 #endif
-/*----------------------------------------------------*/
+//----------------------------------------------------
 #define POISON 2396752
-#define LEFT_CANARY  676767
+#define LEFT_CANARY 676767
 #define RIGHT_CANARY 525252
 #define COUNT_OF_CANARY 2
+#define SIZE_OF_CANARY_TYPE sizeof(double)
 
 
 struct Stack_t{
@@ -36,7 +38,7 @@ struct Stack_t{
     ON_DBG(const char* name;
            const char* file;
            int line);
-    double* data;
+    Stack_elem_t* data;
     size_t size;
     size_t capacity;
     
@@ -58,8 +60,8 @@ Errors stackInit(Stack_t* stk, size_t capacity
                  ON_DBG(,const char* name, const char* file, int line));
 Errors stackDestroy(Stack_t* stk);
 
-Errors stackPush(Stack_t* stk, double value);
-double stackPop(Stack_t* stk, Errors* err);
+Errors stackPush(Stack_t* stk, Stack_elem_t value);
+Stack_elem_t stackPop(Stack_t* stk, Errors* err);
 
 Errors stackDump(const char* fileName, Stack_t* stk);
 
@@ -70,6 +72,7 @@ Errors stackError(Stack_t* stk);
 void handleTheError(Errors err);
 
 bool isEqual(double a, double b);
+//bool isEqual(Stack_elem_t* ptrA, Stack_elem_t valueB, size_t sizeOfElem);
 
 
 Errors stackInit(Stack_t* stk, size_t capacity 
@@ -80,14 +83,14 @@ Errors stackInit(Stack_t* stk, size_t capacity
     stk->capacity = capacity;
     
     double* canaryAddress = NULL;
-    canaryAddress = (double*) calloc(stk->capacity + COUNT_OF_CANARY, sizeof(stk->data[0]));
+    canaryAddress = (double*) malloc(stk->capacity * sizeof(stk->data[0]) + COUNT_OF_CANARY * SIZE_OF_CANARY_TYPE);
     assert(canaryAddress);
 
-    stk->data = (double*) ((char*) canaryAddress + 1 * sizeof(stk->data[0]));;
+    stk->data = (Stack_elem_t*) ((char*) canaryAddress + SIZE_OF_CANARY_TYPE);
     assert(stk->data);
 
-    stk->data[-1] = LEFT_CANARY;
-    stk->data[capacity] = RIGHT_CANARY;
+    *((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;
+    *((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;
 
     stk->size = 0;
 
@@ -108,7 +111,7 @@ Errors stackInit(Stack_t* stk, size_t capacity
 }
 
 
-Errors stackPush(Stack_t* stk, double value){
+Errors stackPush(Stack_t* stk, Stack_elem_t value){
     STACK_VERIFY(stk);
 
     assert(stk->size != stk->capacity);
@@ -140,14 +143,14 @@ Errors stackDump(const char* fileName, Stack_t* stk){
 
     fprintf(filePtr, "    capacity = %lu\n", (unsigned long) stk->capacity);
     fprintf(filePtr, "    size = %lu\n\n", (unsigned long) stk->size);
-    fprintf(filePtr, "    data adderss = [0x%p]\n", stk->data);
+    fprintf(filePtr, "    data address = [0x%p]\n", (void*) stk->data);
     //dataPtr
     for(size_t i = 0; i < stk->capacity; i++){
         if(i == stk->size - 1){
-            fprintf(filePtr, "     [%lu] = %lg *last element\n\n", (unsigned long) i, stk->data[i]);
+            fprintf(filePtr, "     [%lu] = " SPECIFIER " *last element\n\n", (unsigned long) i, stk->data[i]);
             continue;
         }
-        fprintf(filePtr, "     [%lu] = %lg\n", (unsigned long) i, stk->data[i]);
+        fprintf(filePtr, "     [%lu] = " SPECIFIER "\n", (unsigned long) i, stk->data[i]);
     }
 
     fprintf(filePtr, "----------------------------------------------------------------------------------------------------------------------\n");
@@ -165,14 +168,14 @@ Errors reallocUp(Stack_t* stk){
     stk->capacity *= scaleFactor;
 
     double* canaryAddress = NULL;
-    canaryAddress = (double*) realloc((void*) ((char*) stk->data - 1 * sizeof(stk->data[0])), (stk->capacity + COUNT_OF_CANARY) * sizeof(stk->data[0])); 
+    canaryAddress = (double*) realloc((void*) ((char*) stk->data - SIZE_OF_CANARY_TYPE), stk->capacity * sizeof(stk->data[0]) + COUNT_OF_CANARY * SIZE_OF_CANARY_TYPE); 
     assert(canaryAddress);
 
-    stk->data = (double*) ((char*) canaryAddress + 1 * sizeof(stk->data[0]));   
+    stk->data = (Stack_elem_t*) ((char*) canaryAddress + SIZE_OF_CANARY_TYPE);
     assert(stk->data);
 
-    stk->data[-1] = LEFT_CANARY;
-    stk->data[stk->capacity] = RIGHT_CANARY;
+    *((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;
+    *((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;
 
     for(size_t i = stk->size; i < stk->capacity; i++){
             stk->data[i] = POISON;
@@ -185,14 +188,14 @@ Errors reallocUp(Stack_t* stk){
 }
 
 
-double stackPop(Stack_t* stk, Errors* err){
+Stack_elem_t stackPop(Stack_t* stk, Errors* err){
         
     STACK_VERIFY(stk);
     assert(err);
     //check errors to err
     //realloc
     assert(stk->size);
-    double popValue = stk->data[stk->size - 1];
+    Stack_elem_t popValue = stk->data[stk->size - 1];
     stk->data[stk->size - 1] = POISON;
     stk->size--;
 
@@ -240,10 +243,10 @@ Errors stackError(Stack_t* stk){
     if(stk->size == (size_t) (-1)){
         return NEGATIVE_SIZE_ERR;
     }
-    if(!isEqual(stk->data[-1], LEFT_CANARY)){
+    if(!isEqual(*((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)), LEFT_CANARY)){
         return VALUE_OF_LEFT_CANARY_CHANGED_ERR;
     }
-    if(!isEqual(stk->data[stk->capacity], RIGHT_CANARY)){
+    if(!isEqual(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))), RIGHT_CANARY)){
         return VALUE_OF_RIGHT_CANARY_CHANGED_ERR;
     }
 
@@ -272,14 +275,14 @@ Errors reallocDown(Stack_t* stk){
     //     stk->data[i] = CLEANING_CONSTANT;
     // }
     double* canaryAddress = NULL;
-    canaryAddress = (double*) realloc((void*) ((char*) stk->data - 1 * sizeof(stk->data[0])), (stk->capacity + COUNT_OF_CANARY) * sizeof(stk->data[0])); 
+    canaryAddress = (double*) realloc((void*) ((char*) stk->data - SIZE_OF_CANARY_TYPE), stk->capacity * sizeof(stk->data[0]) + COUNT_OF_CANARY * SIZE_OF_CANARY_TYPE); 
     assert(canaryAddress);
 
-    stk->data = (double*) ((char*) canaryAddress + 1 * sizeof(stk->data[0]));   
+    stk->data = (Stack_elem_t*) ((char*) canaryAddress + SIZE_OF_CANARY_TYPE);
     assert(stk->data);
 
-    stk->data[-1] = LEFT_CANARY;
-    stk->data[stk->capacity] = RIGHT_CANARY;
+    *((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;
+    *((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;
 
     STACK_VERIFY(stk);
 
@@ -328,3 +331,25 @@ bool isEqual(double a, double b){
     const double epsilon = 0.0001;
     return fabs(a - b) < epsilon;
 }
+
+// bool isEqual(Stack_elem_t* ptrA, Stack_elem_t valueB, size_t sizeOfElem){
+//     bool isEqual = true;
+//     assert(ptrA);
+
+//     char* ptrValueB = NULL;
+//     Stack_elem_t valB = valueB;
+//     ptrValueB = (char*) valB;
+//     assert(ptrValueB);
+//     printf("dddd");
+
+//     for(size_t i = 0; i < sizeOfElem; i++){
+//         char a = *((char*) ptrA + i);
+//         char b = *((char*) ptrValueB + i);
+//         if(a != b){
+//             isEqual = false;
+//             break;
+//         }     
+//     }
+//     return isEqual;
+// }
+
