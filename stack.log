@@ -1,12 +1,12 @@
 --------------------------------------------------------------------------------------------------------------------------
                    Information about our stack: 
 
-Stack_t <stk> [0x0079FEE4] created by main() at <.\main.cpp>: line 12
+Stack_t <stk> [0x0079FED8] created by main() at <.\main.cpp>: line 12
 
     capacity = 16
     size = 8
 
-    data address = [0x012872C8]
+    data address = [0x012272C8]
      [0] = 5
      [1] = 123
      [2] = 2

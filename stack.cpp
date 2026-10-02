@@ -89,6 +89,7 @@ Errors stackDump(const char* fileName, Stack_t* stk);
 
 Errors reallocUp(Stack_t* stk);
 Errors reallocDown(Stack_t* stk);
+void reallocArray(Stack_t* stk);
 
 Errors stackError(Stack_t* stk);
 void handleTheError(Errors err);
@@ -196,15 +197,7 @@ Errors reallocUp(Stack_t* stk){
     const size_t scaleFactor = 2;
     stk->capacity *= scaleFactor;
 
-    double* canaryAddress = NULL;
-    canaryAddress = (double*) realloc((void*) ((char*) stk->data 
-                     ON_CANARIES(- SIZE_OF_CANARY_TYPE)), stk->capacity * sizeof(stk->data[0]) 
-                     ON_CANARIES(+ COUNT_OF_CANARY * SIZE_OF_CANARY_TYPE)); 
-    assert(canaryAddress);
-
-    stk->data = (Stack_elem_t*) ((char*) canaryAddress
-                 ON_CANARIES(+ SIZE_OF_CANARY_TYPE));
-    assert(stk->data);
+    reallocArray(stk);
 
     ON_CANARIES(*((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;)
     ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
@@ -307,25 +300,13 @@ Errors reallocDown(Stack_t* stk){
         return NO_ERR;
     }
 
-    //size_t oldCapacity = stk->capacity;
     stk->capacity /= scaleFactor;
 
     printf("size = %lu\n", (unsigned long) stk->size);
     printf("new capacity after reallocDown() = %lu\n", (unsigned long) stk->capacity);
     assert(stk->size < stk->capacity);
 
-    // for(size_t i = stk->capacity; i < oldCapacity; i++){
-    //     stk->data[i] = CLEANING_CONSTANT;
-    // }
-    double* canaryAddress = NULL;
-    canaryAddress = (double*) realloc((void*) ((char*) stk->data 
-                     ON_CANARIES(- SIZE_OF_CANARY_TYPE)), stk->capacity * sizeof(stk->data[0]) 
-                     ON_CANARIES(+ COUNT_OF_CANARY * SIZE_OF_CANARY_TYPE)); 
-    assert(canaryAddress);
-
-    stk->data = (Stack_elem_t*) ((char*) canaryAddress
-                 ON_CANARIES(+ SIZE_OF_CANARY_TYPE));
-    assert(stk->data);
+    reallocArray(stk);
 
     ON_CANARIES(*((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;)
     ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
@@ -386,6 +367,19 @@ ON_HASHES(double calculateHash(Stack_t* stk){
 
     return hashVal;
 })
+
+void reallocArray(Stack_t* stk){
+    double* canaryAddress = NULL;
+    canaryAddress = (double*) realloc((void*) ((char*) stk->data 
+                     ON_CANARIES(- SIZE_OF_CANARY_TYPE)), stk->capacity * sizeof(stk->data[0]) 
+                     ON_CANARIES(+ COUNT_OF_CANARY * SIZE_OF_CANARY_TYPE)); 
+    assert(canaryAddress);
+
+    stk->data = (Stack_elem_t*) ((char*) canaryAddress
+                 ON_CANARIES(+ SIZE_OF_CANARY_TYPE));
+    assert(stk->data);
+    return;
+}
 
 
 // bool isEqual(Stack_elem_t* ptrA, Stack_elem_t valueB, size_t sizeOfElem){
