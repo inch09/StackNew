@@ -10,6 +10,7 @@
 #define STACK_DEBUG_MODE
 #define STACK_WITH_CANARIES_MODE
 #define STACK_WITH_HASHES_MODE
+#define STACK_WITH_POISON_MODE
 //--------------------------------------------------
 #ifdef STACK_VERIFICATION_MODE
 #define STACK_VERIFY(stackPtr){\
@@ -38,6 +39,12 @@
 #define ON_HASHES(...) __VA_ARGS__
 #else
 #define ON_HASHES(...)
+#endif
+//----------------------------------------------------
+#ifdef STACK_WITH_POISON_MODE
+#define ON_POISON(...) __VA_ARGS__
+#else
+#define ON_POISON(...)
 #endif
 //----------------------------------------------------
 #define POISON 2396752
@@ -88,7 +95,7 @@ void handleTheError(Errors err);
 
 bool isEqual(double a, double b);
 
-ON_HASHES(double calculateHash(Stack_t* stk));
+ON_HASHES(double calculateHash(Stack_t* stk);)
 
 //bool isEqual(Stack_elem_t* ptrA, Stack_elem_t valueB, size_t sizeOfElem);
 
@@ -120,9 +127,9 @@ Errors stackInit(Stack_t* stk, size_t capacity
         stk->line = line
     );
 
-    for(size_t i = 0; i < capacity; i++){
+    ON_POISON(for(size_t i = 0; i < capacity; i++){
         stk->data[i] = POISON;
-    }
+    };)
 
     STACK_VERIFY(stk);
     printf("Init complete\n");
@@ -202,10 +209,11 @@ Errors reallocUp(Stack_t* stk){
     ON_CANARIES(*((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;)
     ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
 
+    ON_POISON(
     for(size_t i = stk->size; i < stk->capacity; i++){
-            stk->data[i] = POISON;
+        stk->data[i] = POISON;
             //printf("data = %lg\n", stk->data[i]);
-        }
+    };)
 
     STACK_VERIFY(stk);
 
@@ -220,7 +228,9 @@ Stack_elem_t stackPop(Stack_t* stk, Errors* err){
     assert(stk->size);
     
     Stack_elem_t popValue = stk->data[stk->size - 1];
-    stk->data[stk->size - 1] = POISON;
+    
+    ON_POISON(stk->data[stk->size - 1] = POISON;)
+
     stk->size--;
     
     ON_HASHES(stk->hashValue = calculateHash(stk);)
