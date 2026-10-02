@@ -8,6 +8,8 @@
 // ---------------------------------------------------
 #define STACK_VERIFICATION_MODE
 #define STACK_DEBUG_MODE
+#define STACK_WITH_CANARIES_MODE
+#define STACK_WITH_HASHES_MODE
 //--------------------------------------------------
 #ifdef STACK_VERIFICATION_MODE
 #define STACK_VERIFY(stackPtr){\
@@ -26,6 +28,18 @@
 #define ON_DBG(...)
 #endif
 //----------------------------------------------------
+#ifdef STACK_WITH_CANARIES_MODE
+#define ON_CANARIES(...) __VA_ARGS__
+#else
+#define ON_CANARIES(...)
+#endif
+//----------------------------------------------------
+#ifdef STACK_WITH_HASHES_MODE
+#define ON_HASHES(...) __VA_ARGS__
+#else
+#define ON_HASHES(...)
+#endif
+//----------------------------------------------------
 #define POISON 2396752
 #define LEFT_CANARY 67676767
 #define RIGHT_CANARY 52525252
@@ -34,10 +48,10 @@
 
 
 struct Stack_t{
-    double hashValue;
+    ON_HASHES(double hashValue;)
     ON_DBG(const char* name;
            const char* file;
-           int line);
+           int line;)
     Stack_elem_t* data;
     size_t size;
     size_t capacity;
@@ -74,7 +88,7 @@ void handleTheError(Errors err);
 
 bool isEqual(double a, double b);
 
-double calculateHash(Stack_t* stk);
+ON_HASHES(double calculateHash(Stack_t* stk));
 
 //bool isEqual(Stack_elem_t* ptrA, Stack_elem_t valueB, size_t sizeOfElem);
 
@@ -87,14 +101,16 @@ Errors stackInit(Stack_t* stk, size_t capacity
     stk->capacity = capacity;
     
     double* canaryAddress = NULL;
-    canaryAddress = (double*) malloc(stk->capacity * sizeof(stk->data[0]) + COUNT_OF_CANARY * SIZE_OF_CANARY_TYPE);
+    canaryAddress = (double*) malloc(stk->capacity * sizeof(stk->data[0]) 
+                    ON_CANARIES(+ COUNT_OF_CANARY * SIZE_OF_CANARY_TYPE));
     assert(canaryAddress);
 
-    stk->data = (Stack_elem_t*) ((char*) canaryAddress + SIZE_OF_CANARY_TYPE);
+    stk->data = (Stack_elem_t*) ((char*) canaryAddress 
+                 ON_CANARIES(+ SIZE_OF_CANARY_TYPE));
     assert(stk->data);
 
-    *((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;
-    *((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;
+    ON_CANARIES(*((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;)
+    ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
 
     stk->size = 0;
 
@@ -125,7 +141,7 @@ Errors stackPush(Stack_t* stk, Stack_elem_t value){
     stk->data[stk->size] = value;
     stk->size++;
 
-    stk->hashValue = calculateHash(stk);
+    ON_HASHES(stk->hashValue = calculateHash(stk);)
 
     STACK_VERIFY(stk);
 
@@ -174,14 +190,17 @@ Errors reallocUp(Stack_t* stk){
     stk->capacity *= scaleFactor;
 
     double* canaryAddress = NULL;
-    canaryAddress = (double*) realloc((void*) ((char*) stk->data - SIZE_OF_CANARY_TYPE), stk->capacity * sizeof(stk->data[0]) + COUNT_OF_CANARY * SIZE_OF_CANARY_TYPE); 
+    canaryAddress = (double*) realloc((void*) ((char*) stk->data 
+                     ON_CANARIES(- SIZE_OF_CANARY_TYPE)), stk->capacity * sizeof(stk->data[0]) 
+                     ON_CANARIES(+ COUNT_OF_CANARY * SIZE_OF_CANARY_TYPE)); 
     assert(canaryAddress);
 
-    stk->data = (Stack_elem_t*) ((char*) canaryAddress + SIZE_OF_CANARY_TYPE);
+    stk->data = (Stack_elem_t*) ((char*) canaryAddress
+                 ON_CANARIES(+ SIZE_OF_CANARY_TYPE));
     assert(stk->data);
 
-    *((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;
-    *((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;
+    ON_CANARIES(*((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;)
+    ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
 
     for(size_t i = stk->size; i < stk->capacity; i++){
             stk->data[i] = POISON;
@@ -203,7 +222,8 @@ Stack_elem_t stackPop(Stack_t* stk, Errors* err){
     Stack_elem_t popValue = stk->data[stk->size - 1];
     stk->data[stk->size - 1] = POISON;
     stk->size--;
-    stk->hashValue = calculateHash(stk);
+    
+    ON_HASHES(stk->hashValue = calculateHash(stk);)
 
     reallocDown(stk);
 
@@ -249,15 +269,19 @@ Errors stackError(Stack_t* stk){
     if(stk->size == (size_t) (-1)){
         return NEGATIVE_SIZE_ERR;
     }
+
+    ON_CANARIES(
     if(!isEqual(*((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)), LEFT_CANARY)){
         return VALUE_OF_LEFT_CANARY_CHANGED_ERR;
     }
     if(!isEqual(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))), RIGHT_CANARY)){
         return VALUE_OF_RIGHT_CANARY_CHANGED_ERR;
-    }
+    };)
+
+    ON_HASHES(
     if(!isEqual(calculateHash(stk), stk->hashValue)){
         return HASH_DOES_NOT_MATCH_ERR;
-    }
+    };)
 
     return NO_ERR;
 }
@@ -284,14 +308,17 @@ Errors reallocDown(Stack_t* stk){
     //     stk->data[i] = CLEANING_CONSTANT;
     // }
     double* canaryAddress = NULL;
-    canaryAddress = (double*) realloc((void*) ((char*) stk->data - SIZE_OF_CANARY_TYPE), stk->capacity * sizeof(stk->data[0]) + COUNT_OF_CANARY * SIZE_OF_CANARY_TYPE); 
+    canaryAddress = (double*) realloc((void*) ((char*) stk->data 
+                     ON_CANARIES(- SIZE_OF_CANARY_TYPE)), stk->capacity * sizeof(stk->data[0]) 
+                     ON_CANARIES(+ COUNT_OF_CANARY * SIZE_OF_CANARY_TYPE)); 
     assert(canaryAddress);
 
-    stk->data = (Stack_elem_t*) ((char*) canaryAddress + SIZE_OF_CANARY_TYPE);
+    stk->data = (Stack_elem_t*) ((char*) canaryAddress
+                 ON_CANARIES(+ SIZE_OF_CANARY_TYPE));
     assert(stk->data);
 
-    *((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;
-    *((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;
+    ON_CANARIES(*((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;)
+    ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
 
     STACK_VERIFY(stk);
 
@@ -313,9 +340,12 @@ void handleTheError(Errors err){
         GET_ERR_(NEGATIVE_CAPACITY_ERR);
         GET_ERR_(SIZE_MORE_THAN_CAPACITY_ERR);
         GET_ERR_(NEGATIVE_SIZE_ERR);
-        GET_ERR_(VALUE_OF_LEFT_CANARY_CHANGED_ERR);
-        GET_ERR_(VALUE_OF_RIGHT_CANARY_CHANGED_ERR);
-        GET_ERR_(HASH_DOES_NOT_MATCH_ERR);
+
+        ON_CANARIES(GET_ERR_(VALUE_OF_LEFT_CANARY_CHANGED_ERR);
+                    GET_ERR_(VALUE_OF_RIGHT_CANARY_CHANGED_ERR);)
+
+        ON_HASHES(GET_ERR_(HASH_DOES_NOT_MATCH_ERR);)
+
         GET_ERR_(NO_ERR);
     default:
         break;
@@ -332,7 +362,7 @@ bool isEqual(double a, double b){
 }
 
 
-double calculateHash(Stack_t* stk){
+ON_HASHES(double calculateHash(Stack_t* stk){
 
     double hashVal = 0;
     for(size_t i = 0; i < stk->size * sizeof(Stack_elem_t); i++){
@@ -345,7 +375,7 @@ double calculateHash(Stack_t* stk){
     }
 
     return hashVal;
-}
+})
 
 
 // bool isEqual(Stack_elem_t* ptrA, Stack_elem_t valueB, size_t sizeOfElem){
