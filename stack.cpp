@@ -27,14 +27,14 @@
 #endif
 //----------------------------------------------------
 #define POISON 2396752
-#define LEFT_CANARY 6767676767
-#define RIGHT_CANARY 5252525252
+#define LEFT_CANARY 67676767
+#define RIGHT_CANARY 52525252
 #define COUNT_OF_CANARY 2
 #define SIZE_OF_CANARY_TYPE sizeof(double)
 
 
 struct Stack_t{
-
+    double hashValue;
     ON_DBG(const char* name;
            const char* file;
            int line);
@@ -47,13 +47,14 @@ struct Stack_t{
 enum Errors{//
     NO_ERR,
     NULL_STACK_POINTER,
-    NULL_STACK_DATA_POINTER ,
+    NULL_STACK_DATA_POINTER,
     ZERO_CAPACITY_ERR,
     NEGATIVE_CAPACITY_ERR,
     SIZE_MORE_THAN_CAPACITY_ERR,
     NEGATIVE_SIZE_ERR,
     VALUE_OF_LEFT_CANARY_CHANGED_ERR,
-    VALUE_OF_RIGHT_CANARY_CHANGED_ERR
+    VALUE_OF_RIGHT_CANARY_CHANGED_ERR,
+    HASH_DOES_NOT_MATCH_ERR
 };
 
 Errors stackInit(Stack_t* stk, size_t capacity 
@@ -72,6 +73,9 @@ Errors stackError(Stack_t* stk);
 void handleTheError(Errors err);
 
 bool isEqual(double a, double b);
+
+double calculateHash(Stack_t* stk);
+
 //bool isEqual(Stack_elem_t* ptrA, Stack_elem_t valueB, size_t sizeOfElem);
 
 
@@ -120,6 +124,8 @@ Errors stackPush(Stack_t* stk, Stack_elem_t value){
     }
     stk->data[stk->size] = value;
     stk->size++;
+
+    stk->hashValue = calculateHash(stk);
 
     STACK_VERIFY(stk);
 
@@ -192,12 +198,12 @@ Stack_elem_t stackPop(Stack_t* stk, Errors* err){
         
     STACK_VERIFY(stk);
     assert(err);
-    //check errors to err
-    //realloc
     assert(stk->size);
+    
     Stack_elem_t popValue = stk->data[stk->size - 1];
     stk->data[stk->size - 1] = POISON;
     stk->size--;
+    stk->hashValue = calculateHash(stk);
 
     reallocDown(stk);
 
@@ -249,6 +255,9 @@ Errors stackError(Stack_t* stk){
     if(!isEqual(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))), RIGHT_CANARY)){
         return VALUE_OF_RIGHT_CANARY_CHANGED_ERR;
     }
+    if(!isEqual(calculateHash(stk), stk->hashValue)){
+        return HASH_DOES_NOT_MATCH_ERR;
+    }
 
     return NO_ERR;
 }
@@ -289,37 +298,25 @@ Errors reallocDown(Stack_t* stk){
     return NO_ERR;
 }
 
+#define GET_ERR_(err)     \
+    case err:             \
+        strError = #err;  \
+        break;
+
 void handleTheError(Errors err){
-    char* strError = "";
+    const char* strError = "";
 
     switch (err){
-    case NULL_STACK_POINTER:
-        strError = "NULL_STACK_POINTER";
-        break;
-    case NULL_STACK_DATA_POINTER:
-        strError = "NULL_STACK_DATA_POINTER";
-        break;
-    case ZERO_CAPACITY_ERR:
-        strError = "ZERO_CAPACITY_ERR";
-        break;
-    case NEGATIVE_CAPACITY_ERR:
-        strError = "NEGATIVE_CAPACITY_ERR";
-        break;
-    case SIZE_MORE_THAN_CAPACITY_ERR:
-        strError = "SIZE_MORE_THAN_CAPACITY_ERR";
-        break;
-    case NEGATIVE_SIZE_ERR:
-        strError = "NEGATIVE_SIZE_ERR";
-        break; 
-    case VALUE_OF_LEFT_CANARY_CHANGED_ERR:
-        strError = "VALUE_OF_LEFT_CANARY_CHANGED_ERR";
-        break;
-    case VALUE_OF_RIGHT_CANARY_CHANGED_ERR:
-        strError = "VALUE_OF_RIGHT_CANARY_CHANGED_ERR";
-        break;
-    case NO_ERR:
-        return;
-        break;        
+        GET_ERR_(NULL_STACK_POINTER);
+        GET_ERR_(NULL_STACK_DATA_POINTER);
+        GET_ERR_(ZERO_CAPACITY_ERR);
+        GET_ERR_(NEGATIVE_CAPACITY_ERR);
+        GET_ERR_(SIZE_MORE_THAN_CAPACITY_ERR);
+        GET_ERR_(NEGATIVE_SIZE_ERR);
+        GET_ERR_(VALUE_OF_LEFT_CANARY_CHANGED_ERR);
+        GET_ERR_(VALUE_OF_RIGHT_CANARY_CHANGED_ERR);
+        GET_ERR_(HASH_DOES_NOT_MATCH_ERR);
+        GET_ERR_(NO_ERR);
     default:
         break;
     }
@@ -327,10 +324,29 @@ void handleTheError(Errors err){
     printf("You have %s", strError);
 }
 
+#undef GET_ERR_
+
 bool isEqual(double a, double b){
     const double epsilon = 0.0001;
     return fabs(a - b) < epsilon;
 }
+
+
+double calculateHash(Stack_t* stk){
+
+    double hashVal = 0;
+    for(size_t i = 0; i < stk->size * sizeof(Stack_elem_t); i++){
+        if(i % 2 == 0){
+            hashVal += sin(*((char*) stk->data + i)); 
+        }
+        else{
+            hashVal += *((char*) stk->data + i);
+        }
+    }
+
+    return hashVal;
+}
+
 
 // bool isEqual(Stack_elem_t* ptrA, Stack_elem_t valueB, size_t sizeOfElem){
 //     bool isEqual = true;

@@ -1,10 +1,10 @@
 typedef int Stack_elem_t;
 #define SPECIFIER "%d"
-
+//---------------------------
 #include <TXLib.h>
 #include <stdio.h>
 #include "stack.cpp"
-
+//--------------------------
 int main(){
     Errors err = NO_ERR;
     Stack_t stk = {};
