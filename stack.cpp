@@ -1,9 +1,10 @@
 #include <TXLib.h>
 #include <stdio.h>
 
-
-// typedef double Stack_elem_t;
-// #define SPECIFIER "%lf"
+//todo __FUNCTION__
+// hash more size_t
+//hash po 8 byte idem
+//rasshirit dump(oshibki )
 
 // ---------------------------------------------------
 #define STACK_VERIFICATION_MODE
@@ -15,6 +16,7 @@
 #ifdef STACK_VERIFICATION_MODE
 #define STACK_VERIFY(stackPtr){\
     if(stackError(stackPtr) != NO_ERR){\
+        stackDump(LOG_FILE, stackPtr);\
         handleTheError(stackError(stackPtr));\
         assert(0);\
     }\
@@ -55,7 +57,8 @@
 
 
 struct Stack_t{
-    ON_HASHES(double hashValue;)
+
+    ON_HASHES(ssize_t hashValue;)
     ON_DBG(const char* name;
            const char* file;
            int line;)
@@ -65,7 +68,7 @@ struct Stack_t{
     
 };
 
-enum Errors{//
+enum Errors{
     NO_ERR,
     NULL_STACK_POINTER,
     NULL_STACK_DATA_POINTER,
@@ -92,11 +95,11 @@ Errors reallocDown(Stack_t* stk);
 void reallocArray(Stack_t* stk);
 
 Errors stackError(Stack_t* stk);
-void handleTheError(Errors err);
+const char* handleTheError(Errors err);
 
 bool isEqual(double a, double b);
 
-ON_HASHES(double calculateHash(Stack_t* stk);)
+ON_HASHES(ssize_t calculateHash(Stack_t* stk);)
 
 //bool isEqual(Stack_elem_t* ptrA, Stack_elem_t valueB, size_t sizeOfElem);
 
@@ -158,7 +161,8 @@ Errors stackPush(Stack_t* stk, Stack_elem_t value){
 
 
 Errors stackDump(const char* fileName, Stack_t* stk){
-    STACK_VERIFY(stk);
+    //STACK_VERIFY(stk);
+
 
     FILE* filePtr = fopen(fileName, "w");
     assert(filePtr);
@@ -168,12 +172,13 @@ Errors stackDump(const char* fileName, Stack_t* stk){
     fprintf(filePtr, "                   Information about our stack: \n\n");
 
     ON_DBG(
-    fprintf(filePtr, "Stack_t <%s> [0x%p] created by main() at <%s>: line %d\n\n", stk->name, (void*) stk, stk->file, stk->line)    
+    fprintf(filePtr, "Stack_t <%s> [0x%p] created at <%s>: line %d\n\n", stk->name, (void*) stk, stk->file, stk->line)    
     );
 
     fprintf(filePtr, "    capacity = %lu\n", (unsigned long) stk->capacity);
-    fprintf(filePtr, "    size = %lu\n\n", (unsigned long) stk->size);
-    fprintf(filePtr, "    data address = [0x%p]\n", (void*) stk->data);
+    fprintf(filePtr, "    size = %lu\n", (unsigned long) stk->size);
+    fprintf(filePtr, "    data address = [0x%p]\n\n", (void*) stk->data);
+    fprintf(filePtr, "    LEFT CANARY = %li\n", (long int) LEFT_CANARY);
     //dataPtr
     for(size_t i = 0; i < stk->capacity; i++){
         if(i == stk->size - 1){
@@ -182,12 +187,19 @@ Errors stackDump(const char* fileName, Stack_t* stk){
         }
         fprintf(filePtr, "     [%lu] = " SPECIFIER "\n", (unsigned long) i, stk->data[i]);
     }
+    fprintf(filePtr, "    RIGHT CANARY = %li\n\n", (long int) RIGHT_CANARY);
+
+    Errors err = stackError(stk);
+    const char* strError =  handleTheError(err);
+    fprintf(filePtr, "     ");
+    fprintf(filePtr, strError);
+    fprintf(filePtr, "\n");
 
     fprintf(filePtr, "----------------------------------------------------------------------------------------------------------------------\n");
 
     fclose(filePtr);
 
-    STACK_VERIFY(stk);
+    //STACK_VERIFY(stk);
     return NO_ERR;
 }
 
@@ -282,7 +294,7 @@ Errors stackError(Stack_t* stk){
     };)
 
     ON_HASHES(
-    if(!isEqual(calculateHash(stk), stk->hashValue)){
+    if(calculateHash(stk) != stk->hashValue){
         return HASH_DOES_NOT_MATCH_ERR;
     };)
 
@@ -321,7 +333,7 @@ Errors reallocDown(Stack_t* stk){
         strError = #err;  \
         break;
 
-void handleTheError(Errors err){
+const char* handleTheError(Errors err){
     const char* strError = "";
 
     switch (err){
@@ -342,7 +354,9 @@ void handleTheError(Errors err){
         break;
     }
 
-    printf("You have %s", strError);
+    return strError;
+
+    //printf("You have %s", strError);
 }
 
 #undef GET_ERR_
@@ -353,12 +367,12 @@ bool isEqual(double a, double b){
 }
 
 
-ON_HASHES(double calculateHash(Stack_t* stk){
+ON_HASHES(ssize_t calculateHash(Stack_t* stk){
 
-    double hashVal = 0;
+    ssize_t hashVal = 0;
     for(size_t i = 0; i < stk->size * sizeof(Stack_elem_t); i++){
         if(i % 2 == 0){
-            hashVal += sin(*((char*) stk->data + i)); 
+            hashVal += *((char*) stk->data + i) * 14; 
         }
         else{
             hashVal += *((char*) stk->data + i);
