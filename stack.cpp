@@ -163,11 +163,12 @@ Errors stackPush(Stack_t* stk, Stack_elem_t value){
 Errors stackDump(const char* fileName, Stack_t* stk){
     //STACK_VERIFY(stk);
 
-
     FILE* filePtr = fopen(fileName, "w");
     assert(filePtr);
 
-
+    Errors err = stackError(stk);
+    const char* strError =  handleTheError(err);
+    //if errors printf dont work
     fprintf(filePtr, "--------------------------------------------------------------------------------------------------------------------------\n");
     fprintf(filePtr, "                   Information about our stack: \n\n");
 
@@ -189,8 +190,6 @@ Errors stackDump(const char* fileName, Stack_t* stk){
     }
     fprintf(filePtr, "    RIGHT CANARY = %li\n\n", (long int) RIGHT_CANARY);
 
-    Errors err = stackError(stk);
-    const char* strError =  handleTheError(err);
     fprintf(filePtr, "     ");
     fprintf(filePtr, strError);
     fprintf(filePtr, "\n");

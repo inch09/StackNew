@@ -1,16 +1,21 @@
 typedef int Stack_elem_t;
 #define SPECIFIER "%d"
+
+#define LOG_FILE "stack.log"
+//macros init
+// stackPop delete err
+
 //---------------------------
 #include <TXLib.h>
 #include <stdio.h>
 #include "stack.cpp"
 //--------------------------
 int main(){
+
     Errors err = NO_ERR;
     Stack_t stk = {};
     stackInit(&stk, 5
               ON_DBG(,"stk", __FILE__, __LINE__));
-    //stk.data[stk.capacity] = 6;
 
     stackPush(&stk, 135);
     stackPush(&stk, 3);
@@ -18,6 +23,8 @@ int main(){
     stackPush(&stk, 5);
     stackPush(&stk, 12);
     stackPush(&stk, 145);
+    
+    stk.data[-1] = 42;
 
     stackPop(&stk, &err);
     stackPop(&stk, &err);
@@ -37,7 +44,7 @@ int main(){
     stackPush(&stk, 30);
 
 
-    stackDump("stack.log", &stk);
+    stackDump(LOG_FILE, &stk);
 
     return 0;
 }
