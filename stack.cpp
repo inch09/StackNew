@@ -52,7 +52,8 @@
 
 struct Stack_t{
 
-    ON_HASHES(ssize_t hashValue;)
+    ON_HASHES(ssize_t hashData;
+              ssize_t hashFullStruct;)
     ON_DBG(const char* name;
            const char* file;
            int line;)
@@ -72,7 +73,8 @@ enum Errors{
     NEGATIVE_SIZE_ERR,
     VALUE_OF_LEFT_CANARY_CHANGED_ERR,
     VALUE_OF_RIGHT_CANARY_CHANGED_ERR,
-    HASH_DOES_NOT_MATCH_ERR
+    HASH_DATA_DOES_NOT_MATCH_ERR,
+    HASH_FULL_STRUCT_DOES_NOT_MATCH_ERR
 };
 
 Errors stackInit(Stack_t* stk, size_t capacity 
@@ -93,7 +95,8 @@ const char* handleTheError(Errors err);
 
 bool isEqual(double a, double b);
 
-ON_HASHES(ssize_t calculateHash(Stack_t* stk);)
+ON_HASHES(ssize_t calculateHashData(Stack_t* stk);
+          ssize_t calculateHashFullStruct(Stack_t* stk);)
 
 
 Errors stackInit(Stack_t* stk, size_t capacity 
@@ -128,6 +131,9 @@ Errors stackInit(Stack_t* stk, size_t capacity
         stk->data[i] = POISON;
     };)
 
+    ON_HASHES(stk->hashData = calculateHashData(stk);
+              stk->hashFullStruct = calculateHashFullStruct(stk);)
+
     STACK_VERIFY(stk);
     printf("Init complete\n");
 
@@ -159,7 +165,8 @@ Errors stackPush(Stack_t* stk, Stack_elem_t value){
     stk->data[stk->size] = value;
     stk->size++;
 
-    ON_HASHES(stk->hashValue = calculateHash(stk);)
+    ON_HASHES(stk->hashData = calculateHashData(stk);
+              stk->hashFullStruct = calculateHashFullStruct(stk);)
 
     STACK_VERIFY(stk);
 
@@ -179,7 +186,8 @@ Stack_elem_t stackPop(Stack_t* stk, Errors* err){
 
     stk->size--;
     
-    ON_HASHES(stk->hashValue = calculateHash(stk);)
+    ON_HASHES(stk->hashData = calculateHashData(stk);
+              stk->hashFullStruct = calculateHashFullStruct(stk);)
 
     reallocDown(stk);
 
@@ -281,9 +289,13 @@ Errors stackError(Stack_t* stk){
     };)
 
     ON_HASHES(
-    if(calculateHash(stk) != stk->hashValue){
-        return HASH_DOES_NOT_MATCH_ERR;
-    };)
+    if(calculateHashData(stk) != stk->hashData){
+        return HASH_DATA_DOES_NOT_MATCH_ERR;
+    };
+    if(calculateHashFullStruct(stk) != stk->hashFullStruct){
+        return HASH_FULL_STRUCT_DOES_NOT_MATCH_ERR;
+    };
+    )
 
     return NO_ERR;
 }
@@ -309,7 +321,8 @@ const char* handleTheError(Errors err){
         ON_CANARIES(GET_ERR_(VALUE_OF_LEFT_CANARY_CHANGED_ERR);
                     GET_ERR_(VALUE_OF_RIGHT_CANARY_CHANGED_ERR);)
 
-        ON_HASHES(GET_ERR_(HASH_DOES_NOT_MATCH_ERR);)
+        ON_HASHES(GET_ERR_(HASH_DATA_DOES_NOT_MATCH_ERR);
+                  GET_ERR_(HASH_FULL_STRUCT_DOES_NOT_MATCH_ERR);)
 
         GET_ERR_(NO_ERR);
     default:
@@ -329,20 +342,26 @@ bool isEqual(double a, double b){
 }
 
 
-ON_HASHES(ssize_t calculateHash(Stack_t* stk){
-
-    ssize_t hashVal = 0;
-    for(size_t i = 0; i < stk->size * sizeof(Stack_elem_t); i++){
-        if(i % 2 == 0){
-            hashVal += *((char*) stk->data + i) * 14; 
+ON_HASHES(
+    ssize_t calculateHashData(Stack_t* stk){
+        ssize_t hashVal = 0;
+        for(size_t i = 0; i < stk->size * sizeof(Stack_elem_t); i++){
+            if(i % 2 == 0){
+                hashVal += *((char*) stk->data + i) * 14; 
+            }
+            else{
+                hashVal += *((char*) stk->data + i);
+            }
         }
-        else{
-            hashVal += *((char*) stk->data + i);
-        }
+        return hashVal;
     }
 
-    return hashVal;
-})
+    ssize_t calculateHashFullStruct(Stack_t* stk){
+        ssize_t hashVal = calculateHashData(stk) + (ssize_t) (stk->capacity * 12) + (ssize_t) (stk->size * 3);
+        return hashVal;
+    }
+)
+
 
 Errors stackDump(const char* fileName, Stack_t* stk){
     //STACK_VERIFY(stk);

@@ -14,7 +14,7 @@ int main(){
 
     Errors err = NO_ERR;
     Stack_t stk = {};
-    stackInit(&stk, 5
+    stackInit(&stk, 10
               ON_DBG(,"stk", __FILE__, __LINE__));
 
     stackPush(&stk, 135);
@@ -23,8 +23,8 @@ int main(){
     stackPush(&stk, 5);
     stackPush(&stk, 12);
     stackPush(&stk, 145);
-    
-    stk.data[-1] = 42;
+
+    // stk.data[7] = 4;
 
     stackPop(&stk, &err);
     stackPop(&stk, &err);
