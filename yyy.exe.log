@@ -1,0 +1,424 @@
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\yyy.exe, файл: .\stack.cpp, строка: 146, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что ""CHECK ERROR" == "IN LOG FILE"".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x0055A67C (32-bit), Flags: Cmdre0, Thread: 0x1C48 (Main), GetLastError(): 183 (Невозможно создать файл, так как он уже существует). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043DC02 in C:\Users\Иван\Documents\StackNew\yyy.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./stack.cpp:146:
+
+    144:     ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
+    145: 
+=>  146:     STACK_VERIFY(stk);
+    147: 
+    148:     return NO_ERR;
+
+# 1 0x0043D7B7 in C:\Users\Иван\Documents\StackNew\yyy.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./stack.cpp:95:
+
+     93:               stk->hashFullStruct = calculateHashFullStruct(stk);)
+     94: 
+=>   95:     reallocDown(stk);
+     96: 
+     97:     STACK_VERIFY(stk);
+
+# 2 0x0041E9CB in C:\Users\Иван\Documents\StackNew\yyy.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:25:
+
+     23:     stackPop(&stk, &err);
+     24:     stackPop(&stk, &err);
+=>   25:     stackPop(&stk, &err);
+     26:     stackPop(&stk, &err);
+     27:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Oct  6 2026 23:19:46, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Oct 06 2026 23:19:52
+
+Run file:	C:\Users\Иван\Documents\StackNew\yyy.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\yyy.exe, файл: .\stack.cpp, строка: 146, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что ""CHECK ERROR" == "IN LOG FILE"".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x0055967C (32-bit), Flags: Cmdre0, Thread: 0x3FFC (Main), GetLastError(): 183 (Невозможно создать файл, так как он уже существует). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043DBC8 in C:\Users\Иван\Documents\StackNew\yyy.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./stack.cpp:146:
+
+    144:     ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
+    145: 
+=>  146:     STACK_VERIFY(stk);
+    147: 
+    148:     return NO_ERR;
+
+# 1 0x0043D77F in C:\Users\Иван\Documents\StackNew\yyy.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./stack.cpp:95:
+
+     93:               stk->hashFullStruct = calculateHashFullStruct(stk);)
+     94: 
+=>   95:     reallocDown(stk);
+     96: 
+     97:     STACK_VERIFY(stk);
+
+# 2 0x0041E9B7 in C:\Users\Иван\Documents\StackNew\yyy.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:25:
+
+     23:     stackPop(&stk, &err);
+     24:     stackPop(&stk, &err);
+=>   25:     stackPop(&stk, &err);
+     26:     stackPop(&stk, &err);
+     27:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Oct  6 2026 23:20:21, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Oct 06 2026 23:20:35
+
+Run file:	C:\Users\Иван\Documents\StackNew\yyy.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\yyy.exe, файл: .\stack.cpp, строка: 146, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что ""CHECK ERROR" == "IN LOG FILE"".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x0055967C (32-bit), Flags: Cmdre0, Thread: 0x65C (Main), GetLastError(): 183 (Невозможно создать файл, так как он уже существует). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043DBC8 in C:\Users\Иван\Documents\StackNew\yyy.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./stack.cpp:146:
+
+    144:     ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
+    145: 
+=>  146:     STACK_VERIFY(stk);
+    147: 
+    148:     return NO_ERR;
+
+# 1 0x0043D77F in C:\Users\Иван\Documents\StackNew\yyy.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./stack.cpp:95:
+
+     93:               stk->hashFullStruct = calculateHashFullStruct(stk);)
+     94: 
+=>   95:     reallocDown(stk);
+     96: 
+     97:     STACK_VERIFY(stk);
+
+# 2 0x0041E9B7 in C:\Users\Иван\Documents\StackNew\yyy.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:25:
+
+     23:     stackPop(&stk, &err);
+     24:     stackPop(&stk, &err);
+=>   25:     stackPop(&stk, &err);
+     26:     stackPop(&stk, &err);
+     27:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Oct  6 2026 23:20:21, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Oct 06 2026 23:21:22
+
+Run file:	C:\Users\Иван\Documents\StackNew\yyy.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\yyy.exe, файл: .\stack.cpp, строка: 146, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что ""CHECK ERROR" == "IN LOG FILE"".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x0055967C (32-bit), Flags: Cmdre0, Thread: 0x3244 (Main), GetLastError(): 183 (Невозможно создать файл, так как он уже существует). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043DBC8 in C:\Users\Иван\Documents\StackNew\yyy.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./stack.cpp:146:
+
+    144:     ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
+    145: 
+=>  146:     STACK_VERIFY(stk);
+    147: 
+    148:     return NO_ERR;
+
+# 1 0x0043D77F in C:\Users\Иван\Documents\StackNew\yyy.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./stack.cpp:95:
+
+     93:               stk->hashFullStruct = calculateHashFullStruct(stk);)
+     94: 
+=>   95:     reallocDown(stk);
+     96: 
+     97:     STACK_VERIFY(stk);
+
+# 2 0x0041E9B7 in C:\Users\Иван\Documents\StackNew\yyy.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:25:
+
+     23:     stackPop(&stk, &err);
+     24:     stackPop(&stk, &err);
+=>   25:     stackPop(&stk, &err);
+     26:     stackPop(&stk, &err);
+     27:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Oct  6 2026 23:21:33, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Oct 06 2026 23:21:35
+
+Run file:	C:\Users\Иван\Documents\StackNew\yyy.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\yyy.exe, файл: .\stack.cpp, строка: 146, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что ""CHECK ERROR" == "IN LOG FILE"".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x0055967C (32-bit), Flags: Cmdre0, Thread: 0x2784 (Main), GetLastError(): 183 (Невозможно создать файл, так как он уже существует). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043DBC8 in C:\Users\Иван\Documents\StackNew\yyy.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./stack.cpp:146:
+
+    144:     ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
+    145: 
+=>  146:     STACK_VERIFY(stk);
+    147: 
+    148:     return NO_ERR;
+
+# 1 0x0043D77F in C:\Users\Иван\Documents\StackNew\yyy.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./stack.cpp:95:
+
+     93:               stk->hashFullStruct = calculateHashFullStruct(stk);)
+     94: 
+=>   95:     reallocDown(stk);
+     96: 
+     97:     STACK_VERIFY(stk);
+
+# 2 0x0041E9B7 in C:\Users\Иван\Documents\StackNew\yyy.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:25:
+
+     23:     stackPop(&stk, &err);
+     24:     stackPop(&stk, &err);
+=>   25:     stackPop(&stk, &err);
+     26:     stackPop(&stk, &err);
+     27:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Oct  6 2026 23:21:33, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Oct 06 2026 23:21:58
+
+Run file:	C:\Users\Иван\Documents\StackNew\yyy.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\yyy.exe, файл: .\stack.cpp, строка: 146, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что ""CHECK ERROR" == "IN LOG FILE"".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x0055967C (32-bit), Flags: Cmdre0, Thread: 0x4B74 (Main), GetLastError(): 183 (Невозможно создать файл, так как он уже существует). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043DBC8 in C:\Users\Иван\Documents\StackNew\yyy.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./stack.cpp:146:
+
+    144:     ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
+    145: 
+=>  146:     STACK_VERIFY(stk);
+    147: 
+    148:     return NO_ERR;
+
+# 1 0x0043D77F in C:\Users\Иван\Documents\StackNew\yyy.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./stack.cpp:95:
+
+     93:               stk->hashFullStruct = calculateHashFullStruct(stk);)
+     94: 
+=>   95:     reallocDown(stk);
+     96: 
+     97:     STACK_VERIFY(stk);
+
+# 2 0x0041E9B7 in C:\Users\Иван\Documents\StackNew\yyy.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:25:
+
+     23:     stackPop(&stk, &err);
+     24:     stackPop(&stk, &err);
+=>   25:     stackPop(&stk, &err);
+     26:     stackPop(&stk, &err);
+     27:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Oct  6 2026 23:22:04, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Oct 06 2026 23:22:08
+
+Run file:	C:\Users\Иван\Documents\StackNew\yyy.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\yyy.exe, файл: .\stack.cpp, строка: 146, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что ""CHECK ERROR" == "IN LOG FILE"".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x0055967C (32-bit), Flags: Cmdre0, Thread: 0x7DC (Main), GetLastError(): 183 (Невозможно создать файл, так как он уже существует). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043DBC8 in C:\Users\Иван\Documents\StackNew\yyy.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./stack.cpp:146:
+
+    144:     ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
+    145: 
+=>  146:     STACK_VERIFY(stk);
+    147: 
+    148:     return NO_ERR;
+
+# 1 0x0043D77F in C:\Users\Иван\Documents\StackNew\yyy.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./stack.cpp:95:
+
+     93:               stk->hashFullStruct = calculateHashFullStruct(stk);)
+     94: 
+=>   95:     reallocDown(stk);
+     96: 
+     97:     STACK_VERIFY(stk);
+
+# 2 0x0041E9B7 in C:\Users\Иван\Documents\StackNew\yyy.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:25:
+
+     23:     stackPop(&stk, &err);
+     24:     stackPop(&stk, &err);
+=>   25:     stackPop(&stk, &err);
+     26:     stackPop(&stk, &err);
+     27:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Oct  6 2026 23:25:30, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Oct 06 2026 23:25:33
+
+Run file:	C:\Users\Иван\Documents\StackNew\yyy.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Иван\Documents\StackNew\yyy.exe, файл: .\stack.cpp, строка: 146, функция: Errors reallocDown(Stack_t*),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что ""CHECK ERROR" == "IN LOG FILE"".
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x0055967C (32-bit), Flags: Cmdre0, Thread: 0x24B4 (Main), GetLastError(): 183 (Невозможно создать файл, так как он уже существует). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043DBC8 in C:\Users\Иван\Documents\StackNew\yyy.exe: reallocDown() at C:/Users/Иван/Documents/StackNew/./stack.cpp:146:
+
+    144:     ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
+    145: 
+=>  146:     STACK_VERIFY(stk);
+    147: 
+    148:     return NO_ERR;
+
+# 1 0x0043D77F in C:\Users\Иван\Documents\StackNew\yyy.exe: stackPop() at C:/Users/Иван/Documents/StackNew/./stack.cpp:95:
+
+     93:               stk->hashFullStruct = calculateHashFullStruct(stk);)
+     94: 
+=>   95:     reallocDown(stk);
+     96: 
+     97:     STACK_VERIFY(stk);
+
+# 2 0x0041E9B7 in C:\Users\Иван\Documents\StackNew\yyy.exe: main() at C:/Users/Иван/Documents/StackNew/./main.cpp:25:
+
+     23:     stackPop(&stk, &err);
+     24:     stackPop(&stk, &err);
+=>   25:     stackPop(&stk, &err);
+     26:     stackPop(&stk, &err);
+     27:     stackPop(&stk, &err);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\иван\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Oct  6 2026 23:44:18, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Oct 06 2026 23:44:30
+
+Run file:	C:\Users\Иван\Documents\StackNew\yyy.exe
+Directory:	C:\Users\Иван\Documents\StackNew
+
+--------------------------------------------------
