@@ -5,7 +5,6 @@
 #include "stack.h"
 //--------------------------
 int main(){
-    Errors err = NO_ERR;
     Stack_t stk = {};
     stackInit(&stk, 10
               ON_DBG(,"stk", __FILE__, __LINE__));
@@ -19,13 +18,13 @@ int main(){
 
     //stk.data[7] = 4;
 
-    stackPop(&stk, &err);
-    stackPop(&stk, &err);
-    stackPop(&stk, &err);
-    stackPop(&stk, &err);
-    stackPop(&stk, &err);
-    stackPop(&stk, &err);
-    //stackPop(&stk, &err);
+    stackPop(&stk);
+    stackPop(&stk);
+    stackPop(&stk);
+    stackPop(&stk);
+    stackPop(&stk);
+    stackPop(&stk);
+    //stackPop(&stk);
 
     stackPush(&stk, 5);
     stackPush(&stk, 123);

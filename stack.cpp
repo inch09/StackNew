@@ -77,10 +77,9 @@ Errors stackPush(Stack_t* stk, Stack_elem_t value){
 }
 
 
-Stack_elem_t stackPop(Stack_t* stk, Errors* err){
+Stack_elem_t stackPop(Stack_t* stk){
         
     STACK_VERIFY(stk);
-    assert(err);
     assert(stk->size);
     
     Stack_elem_t popValue = stk->data[stk->size - 1];

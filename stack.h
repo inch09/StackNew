@@ -39,7 +39,7 @@ Errors stackInit(Stack_t* stk, size_t capacity
 Errors stackDestroy(Stack_t* stk);
 
 Errors stackPush(Stack_t* stk, Stack_elem_t value);
-Stack_elem_t stackPop(Stack_t* stk, Errors* err);
+Stack_elem_t stackPop(Stack_t* stk);
 
 Errors stackDump(const char* fileName, Stack_t* stk);
 
