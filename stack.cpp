@@ -273,24 +273,27 @@ Errors stackDump(const char* fileName, Stack_t* stk){
 
     FILE* filePtr = fopen(fileName, "w");
     assert(filePtr);
-        
-    Errors err = stackError(stk);
-    const char* strError =  handleTheError(err);
 
 
     fprintf(filePtr, "--------------------------------------------------------------------------------------------------------------------------\n");
     fprintf(filePtr, "                   Information about our stack: \n\n");
 
     ON_DBG(
-    fprintf(filePtr, "Stack_t <%s> [0x%p] created at <%s>: line %d\n\n", stk->name, (void*) stk, stk->file, stk->line)    
-    );
+        fprintf(filePtr, "Stack_t <%s> [0x%p] created at <%s>: line %d\n\n", stk->name, (void*) stk, stk->file, stk->line);   
+    )
 
     fprintf(filePtr, "    capacity = %lu\n", (unsigned long) stk->capacity);
     fprintf(filePtr, "    size = %lu\n", (unsigned long) stk->size);
 
     assert(stk->data);
-    fprintf(filePtr, "    data address = [0x%p]\n\n", (void*) stk->data);
-    fprintf(filePtr, "    LEFT CANARY = %li\n", (long int) LEFT_CANARY);
+
+    ON_DBG(
+        fprintf(filePtr, "    data address = [0x%p]\n\n", (void*) stk->data);
+    )
+
+    ON_CANARIES(
+        fprintf(filePtr, "    LEFT CANARY = %li\n", (long int) LEFT_CANARY);
+    )
     //dataPtr
     for(size_t i = 0; i < stk->capacity; i++){
         if(i == stk->size - 1){
@@ -299,11 +302,18 @@ Errors stackDump(const char* fileName, Stack_t* stk){
         }
         fprintf(filePtr, "     [%lu] = " SPECIFIER "\n", (unsigned long) i, stk->data[i]);
     }
-    fprintf(filePtr, "    RIGHT CANARY = %li\n\n", (long int) RIGHT_CANARY);
 
-    fprintf(filePtr, "     ");
-    fprintf(filePtr, strError);
-    fprintf(filePtr, "\n");
+    ON_CANARIES(
+        fprintf(filePtr, "    RIGHT CANARY = %li\n\n", (long int) RIGHT_CANARY);
+    )
+
+    ON_DBG(
+        Errors err = stackError(stk);
+        const char* strError =  handleTheError(err);
+        fprintf(filePtr, "     ");
+        fprintf(filePtr, strError);
+        fprintf(filePtr, "\n");
+    )
 
     fprintf(filePtr, "----------------------------------------------------------------------------------------------------------------------\n");
 
