@@ -16,7 +16,7 @@ int main(){
     stackPush(&stk, 12);
     stackPush(&stk, 145);
 
-    //stk.data[7] = 4;
+    stk.data[-1] = 4;
 
     stackPop(&stk);
     stackPop(&stk);

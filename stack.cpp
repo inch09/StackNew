@@ -87,11 +87,14 @@ Stack_elem_t stackPop(Stack_t* stk){
     ON_POISON(stk->data[stk->size - 1] = POISON;)
 
     stk->size--;
-    
+
     ON_HASHES(stk->hashData = calculateHashData(stk);
               stk->hashFullStruct = calculateHashFullStruct(stk);)
 
     reallocDown(stk);
+
+    ON_HASHES(stk->hashData = calculateHashData(stk);
+              stk->hashFullStruct = calculateHashFullStruct(stk);)
 
     STACK_VERIFY(stk);
 
@@ -114,6 +117,10 @@ Errors reallocUp(Stack_t* stk){
         stk->data[i] = POISON;
             //printf("data = %lg\n", stk->data[i]);
     };)
+
+
+    ON_HASHES(stk->hashData = calculateHashData(stk);
+              stk->hashFullStruct = calculateHashFullStruct(stk);)
 
     STACK_VERIFY(stk);
 
@@ -141,6 +148,9 @@ Errors reallocDown(Stack_t* stk){
 
     ON_CANARIES(*((double*) ((char*) stk->data - SIZE_OF_CANARY_TYPE)) = LEFT_CANARY;)
     ON_CANARIES(*((double*) ((char*) stk->data + stk->capacity * sizeof(stk->data[0]))) = RIGHT_CANARY;)
+
+    ON_HASHES(stk->hashData = calculateHashData(stk);
+              stk->hashFullStruct = calculateHashFullStruct(stk);)
 
     STACK_VERIFY(stk);
 

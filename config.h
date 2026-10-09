@@ -7,7 +7,7 @@ typedef int Stack_elem_t;
 #define SPECIFIER "%d"
 #define LOG_FILE "stack.log"
 
-#define STACK_WITHOUT_DEBUG_MODE
+#define STACK_FULL_DEBUG_MODE
 //-------------------------------------------------
 #ifdef STACK_FULL_DEBUG_MODE
 
